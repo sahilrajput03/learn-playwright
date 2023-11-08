@@ -3,6 +3,10 @@
 - **My google doc notes:** [Click here](https://docs.google.com/document/d/1wEsteSlYXM0nbCwucnXijWbqLDwEWjKIHgOdxhqSa3k/edit?usp=sharing)
 - Course Playlist: [Click here](https://www.youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8)
 
+**Note:**
+
+I have **disabled** `webkit` browser in `playwright.config.ts` file because my manjaro (arch based) linux does not yet able to run webkit brower. Though chromium and firefox runs quite well.
+
 ## Installation via CLI
 
 Install browser via `npx playwright install`. In my case it installed following: ` Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.

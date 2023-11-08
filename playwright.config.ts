@@ -46,7 +46,7 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    // ~Sahil: Disabling webkit browser for my manjaro case
+    // ! Sahil: Disabled webkit browser for my manjaro because webkit is not able to run at all.
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] },
