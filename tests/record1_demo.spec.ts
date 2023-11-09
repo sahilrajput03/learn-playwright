@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-// with my alias: pth record1_demo
+// LEARN: Run with my alias: pth record1_demo
 
 test('record demo test', async ({ page }) => {
+  // const k = await new Promise(res => setTimeout(res, 10_000))
   await page.goto('https://www.saucedemo.com/');
   await page.locator('[data-test="username"]').click();
   await page.locator('[data-test="username"]').fill('standard_user');

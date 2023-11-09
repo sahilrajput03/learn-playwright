@@ -14,6 +14,7 @@ Install browser via `npx playwright install`. In my case it installed following:
 Install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
 
 My bash Aliases:
+
 ```bash
 alias pt=npx playwright test --project=chromium
 alias pth='npx playwright test --headed --project=chromium'
@@ -58,6 +59,11 @@ Inside that directory, you can run several commands:
   `npx playwright test example.spec.ts:10 --debug`
     Run a file with debug mode and only break on particular test.
     <!-- CAREFUL: The line number must be one i.e, where you have test(..) line only. -->
+
+  `npx playwright show-trace PATH-TO-FILE___trace.zip`
+  `npx playwright show-trace ./test-results/record1_demo-record-demo-test-chromium-retry1/trace.zip`
+    Open `Trace Viewer` and open the last trace reports.
+    NOTE: Traces are recorded only on retries (so make sure the value of `retries` is a non-zero value in `playwright.config.ts` file)
 
 We suggest that you begin by typing:
 
