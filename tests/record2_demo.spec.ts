@@ -10,6 +10,10 @@ test('record demo 2', async ({ page }) => {
 		headless: false
 	});
 	const context = await browser.newContext();
+	
+	// ? LEARN: This is very helpful to debug any test in simple way!
+	// await page.pause();
+	
 	await page.goto('https://www.saucedemo.com/');
 	await page.locator('[data-test="username"]').click();
 	await page.locator('[data-test="username"]').fill('standard_user');
