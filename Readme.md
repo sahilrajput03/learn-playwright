@@ -16,9 +16,19 @@ Install Playwright operating system dependencies (requires sudo / root): `sudo n
 My bash Aliases:
 
 ```bash
-alias pt=npx playwright test --project=chromium
+# Playwright Aliases
+alias pt='npx playwright test --project=chromium'
 alias pth='npx playwright test --headed --project=chromium'
+# LEARN: Open `Playwright Inspector` ((helpful in debugging & step by step execution))
 alias ptd='npx playwright test --project=chromium --debug'
+# ❤️  Playwright watch script: source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692
+alias ptw='PWTEST_WATCH=1 npx playwright test --project=chromium'
+# ❤️  Playwright watch script with UI mode
+alias ptu='npx playwright test --project=chromium --ui'
+# MY UN-OFFICIAL WAY (NO NEED TO USE BELOW NODEMON `npm scripts` at all)
+# "watch": "nodemon -e spec.ts -x 'npx playwright test --project=chromium'",
+# "watch-headed": "nodemon -e spec.ts -x 'npx playwright test --headed --project=chromium' -w tests"
+
 ```
 
 Inside that directory, you can run several commands:
@@ -30,7 +40,7 @@ Inside that directory, you can run several commands:
     `*` Run test in headed mode    
 
   `npx playwright test --ui`
-    `*` Starts the interactive UI mode.
+    `❤️` Starts the interactive UI mode.
 
   `npx playwright test --project=chromium`
     `*` Runs the tests only on Desktop Chrome.
@@ -139,6 +149,8 @@ yay -S playwright
 <!-- Learn: For below size to work I must add below entry to my i3config file:
   # Make playwright browser float
   for_window [instance="code-url-handler .*"] floating enable
+  for_window [instance="chromium-browser\ \(\/tmp\/playwright_.*"] floating enable
+  for_window [title="Playwright Test"] floating enable
  -->
 
 Learn: Here `400` is width and `600` is height.

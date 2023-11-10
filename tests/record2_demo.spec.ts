@@ -11,7 +11,7 @@ test('record demo 2', async ({ page }) => {
 	});
 	const context = await browser.newContext();
 	
-	// ? LEARN: This is very helpful to debug any test in simple way!
+	// ? LEARN: Open `Playwright Inspector` ((helpful in debugging & step by step execution))
 	// await page.pause();
 	
 	await page.goto('https://www.saucedemo.com/');

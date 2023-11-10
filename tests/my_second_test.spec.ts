@@ -1,13 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { chromium } from 'playwright';
 
-// LEARN: This file was generated and then edited.
-// LEARN: Check `Readme.md` to get the command used.
-
-test('record demo 2', async ({ page }) => {
-	const browser = await chromium.launch({
-		headless: false
-	});
+test('my second test', async ({ page }) => {
+	const browser = await chromium.launch();
 	const context = await browser.newContext();
 	
 	// ? LEARN: Open `Playwright Inspector` ((helpful in debugging & step by step execution))
