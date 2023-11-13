@@ -20,7 +20,7 @@ if (!TWITTER_EMAIL_OR_USERNAME || !TWITTER_PASSWORD) {
 const thoughts = 'https://raw.githubusercontent.com/sahilrajput03/sahilrajput03/master/thoughts-principles.md'
 test('Test One', async ({ page }) => {
 	// await page.pause()
-	
+
 	const res = await axios.get(thoughts)
 	const thoughtList = res.data.split(`\n`).filter(t => !!t);
 	const randomThought = thoughtList[getRandomValue(thoughtList.length)];
@@ -29,11 +29,11 @@ test('Test One', async ({ page }) => {
 	// Login to twitter.com
 	await page.goto('https://twitter.com/')
 	await page.getByTestId('loginButton').click();
-  await page.locator('label div').nth(3).click();
-  await page.getByLabel('Phone, email, or username').fill(TWITTER_EMAIL_OR_USERNAME);
-  await page.getByRole('button', { name: 'Next' }).click();
-  await page.getByLabel('Password', { exact: true }).fill(TWITTER_PASSWORD);
-  await page.getByTestId('LoginForm_Login_Button').click();
+	await page.locator('label div').nth(3).click();
+	await page.getByLabel('Phone, email, or username').fill(TWITTER_EMAIL_OR_USERNAME);
+	await page.getByRole('button', { name: 'Next' }).click();
+	await page.getByLabel('Password', { exact: true }).fill(TWITTER_PASSWORD);
+	await page.getByTestId('LoginForm_Login_Button').click();
 
 	// Make tweet
 	await page.getByTestId('tweetTextarea_0').fill(randomThought);
