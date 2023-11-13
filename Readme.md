@@ -221,3 +221,7 @@ $ npx playwright codegen -h
 #   $ codegen --target=python
 #   $ codegen -b webkit https://example.com
 ```
+
+## Bad things about playwright
+
+- Why is running playwright test --debug pausing on page.goto: https://github.com/microsoft/playwright/issues/19425

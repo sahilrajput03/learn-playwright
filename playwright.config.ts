@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Maximum time one test can run for
   // ? LERAN: Originally it was 30 seconds (ie., 30 * 1_000)
-  timeout: 10 * 1_000,
+  timeout: 25 * 1_000,
 
   expect: {
     timeout: 5 * 1_000
@@ -32,10 +32,18 @@ export default defineConfig({
   // Reporter to use. See https://playwright.dev/docs/test-reporters
   // reporter: 'html',
   // ? LEARN: To disable opening of report on test failure
+  // reporter: [['html', { open: 'on-failure' }] ],
   reporter: [['html', { open: 'never' }] ],
 
   // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions.
+  // LEARN: This feature does not work well in linux - 13 Nov, 2023
   use: {
+    // video: 'on',
+    launchOptions: {
+      // This option adds a delay to every instruction
+      // slowMo: 1000
+    },
+    
     // Base URL to use in actions like `await page.goto('/')`.
     // baseURL: 'http://127.0.0.1:3000',
 

@@ -1,6 +1,13 @@
 import { test, expect, chromium } from '@playwright/test';
 
-test('login - applitools.com', async ({ page }) => {
+test.only('login - applitools.com', async () => {
+	const browser = await chromium.launch({
+    headless: false
+  });
+  const context = await browser.newContext({
+    colorScheme: 'dark'
+  });
+  const page = await context.newPage();
   await page.goto('https://demo.applitools.com/');
 
 	await page.getByPlaceholder('Enter your username').fill('Sahil')
@@ -41,7 +48,7 @@ test('login - opensource-demo.orangehrmlive.com', async ({ page}) => {
 	// await page.pause()
 })
 
-test.only('login - https://admin-demo.nopcommerce.com/login', async ({ page}) => {
+test('login - https://admin-demo.nopcommerce.com/login', async ({ page}) => {
   await page.goto('https://admin-demo.nopcommerce.com/login', { timeout: 10_000});
 	await page.getByLabel('Email:').click();
   await page.getByLabel('Email:').press('Control+a');
