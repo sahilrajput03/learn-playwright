@@ -1,5 +1,8 @@
 # Learn Playwright
 
+*Probably (todo: checkout):*
+- We can install only single browser too like that: `npm i playwright-chromium` (source: [Click here](https://github.com/microsoft/playwright/issues/812#issuecomment-581501050))
+
 - **My google doc notes:** [Click here](https://docs.google.com/document/d/1wEsteSlYXM0nbCwucnXijWbqLDwEWjKIHgOdxhqSa3k/edit?usp=sharing)
 - Course Playlist: [Click here](https://www.youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8)
 
