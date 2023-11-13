@@ -6,3 +6,4 @@ node_modules/
 
 # Expluding my custom test record videos
 my-test-videos
+.env
