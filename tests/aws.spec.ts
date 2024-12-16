@@ -1,14 +1,17 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config'
+import { authenticator } from 'otplib';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
 
 const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
 const AWS_ACCOUNT_PASSWORD: string | undefined = process.env.AWS_ACCOUNT_PASSWORD;
+const AWS_AUTHENTICATOR_SECRET: string | undefined = process.env.AWS_AUTHENTICATOR_SECRET;
 
-if (!AWS_ACCOUNT_EMAIL || !AWS_ACCOUNT_PASSWORD) {
-    console.error('Please defined these env values in .env file:', 'AWS_ACCOUNT_EMAIL, AWS_ACCOUNT_PASSWORD')
+
+if (!AWS_ACCOUNT_EMAIL || !AWS_ACCOUNT_PASSWORD || !AWS_AUTHENTICATOR_SECRET) {
+    console.error('Please defined these env values in .env file:', 'AWS_ACCOUNT_EMAIL, AWS_ACCOUNT_PASSWORD, AWS_AUTHENTICATOR_SECRET')
     process.exit(1)
 }
 
@@ -21,8 +24,16 @@ const loginToAws = async (page) => {
     await page.locator('#password').click();
     await page.locator('#password').fill(AWS_ACCOUNT_PASSWORD);
     await page.locator('#password').press('Enter');
+    // await page.pause()
     await page.locator('#multi_mfa_swhw_radio_button_box div').first().click();
     await page.getByRole('button', { name: 'Next' }).click();
+
+    const token = authenticator.generate(AWS_AUTHENTICATOR_SECRET)
+    await page.locator('#mfaCode').click();
+    await page.locator('#mfaCode').fill(token); // authenticator token is put automatically here!
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    // ---- NOTE ---- >>>> Since now I'm generating the token via this libraray using my secret of the authenticator app I do not need to enter the token from my google authenticator app manually now.
     // * Please enter your authenticator code from your mobiile app manually with hand
     // await page.pause(); // Sahil: no need to pause actually because playwright wait until the next selector is available.
 }
