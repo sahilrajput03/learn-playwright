@@ -4,6 +4,8 @@ import { authenticator } from 'otplib';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
+// alias for above command: ptd ./path/to/file.spec.ts'
+
 
 const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
 const AWS_ACCOUNT_PASSWORD: string | undefined = process.env.AWS_ACCOUNT_PASSWORD;
