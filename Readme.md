@@ -1,6 +1,7 @@
 # Learn Playwright
 
-*Probably (todo: checkout):*
+_Probably (todo: checkout):_
+
 - We can install only single browser too like that: `npm i playwright-chromium` (source: [Click here](https://github.com/microsoft/playwright/issues/812#issuecomment-581501050))
 
 - **My google doc notes:** [Click here](https://docs.google.com/document/d/1wEsteSlYXM0nbCwucnXijWbqLDwEWjKIHgOdxhqSa3k/edit?usp=sharing)
@@ -22,8 +23,11 @@ My bash Aliases:
 # Playwright Aliases
 alias pt='npx playwright test --project=chromium'
 alias pth='npx playwright test --headed --project=chromium'
-# LEARN: Open `Playwright Inspector` ((helpful in debugging & step by step execution))
+# ❤️ 🚀  LEARN: Open `Playwright Inspector` (helpful in debugging & step by step execution)
 alias ptd='npx playwright test --project=chromium --debug'
+# ❤️ 🚀🚀  To run single test file
+ptd ./path/to/file.spec.ts'
+
 # ❤️  Playwright watch script: source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692
 alias ptw='PWTEST_WATCH=1 npx playwright test --project=chromium'
 # ❤️  Playwright watch script with UI mode
@@ -36,56 +40,58 @@ alias ptu='npx playwright test --project=chromium --ui'
 
 Inside that directory, you can run several commands:
 
-  `npx playwright test`
-    `*` Runs the end-to-end tests.
-    
-  `npx playwright test --headed`
-    `*` Run test in headed mode    
+`npx playwright test`
+`*` Runs the end-to-end tests.
 
-  `npx playwright test --ui`
-    `❤️` Starts the interactive UI mode.
+`npx playwright test --headed`
+`*` Run test in headed mode
 
-  `npx playwright test --project=chromium`
-    `*` Runs the tests only on Desktop Chrome.
+`npx playwright test --ui`
+`❤️` Starts the interactive UI mode.
 
-  `npx playwright test --project=chromium --project=firefox`
-    `*` Runs the tests only on Desktop Chrome and Firefox.
-    `*` Available options: `chromium`, `firefox`, `webkit`    
+`npx playwright test --project=chromium`
+`*` Runs the tests only on Desktop Chrome.
 
-  `npx playwright test exampleFileNameHere`
-    Runs the tests in a specific file.
+`npx playwright test --project=chromium --project=firefox`
+`*` Runs the tests only on Desktop Chrome and Firefox.
+`*` Available options: `chromium`, `firefox`, `webkit`
 
-  `npx playwright test exampleFileNameHere1 exampleFileNameHere2`
-    Runs multiple test files.
+`npx playwright test exampleFileNameHere`
+Runs the tests in a specific file.
 
-  `npx playwright test -g textInTestTitle`
-    Runs test with title.
-    Eg., `npx playwright test -g "get started link"`
+`npx playwright test exampleFileNameHere1 exampleFileNameHere2`
+Runs multiple test files.
 
-  `npx playwright test --debug`
-    Runs the tests in debug mode.
-    `*` LEARN: By default debug mode will run in `headed` mode.
+`npx playwright test -g textInTestTitle`
+Runs test with title.
+Eg., `npx playwright test -g "get started link"`
 
-  `npx playwright test exampleFileNameHere --debug`
-    Run a file with debug mode.
+`npx playwright test --debug`
+Runs the tests in debug mode.
+`*` LEARN: By default debug mode will run in `headed` mode.
 
-  `npx playwright test example.spec.ts:10 --debug`
-    Run a file with debug mode and only break on particular test.
-    <!-- CAREFUL: The line number must be one i.e, where you have test(..) line only. -->
+`npx playwright test exampleFileNameHere --debug`
+Run a file with debug mode.
 
-  `npx playwright show-trace PATH-TO-FILE___trace.zip`
-  `npx playwright show-trace ./test-results/record1_demo-record-demo-test-chromium-retry1/trace.zip`
-    Open `Trace Viewer` and open the last trace reports.
-    NOTE: Traces are recorded only on retries (so make sure the value of `retries` is a non-zero value in `playwright.config.ts` file)
+`npx playwright test example.spec.ts:10 --debug`
+Run a file with debug mode and only break on particular test.
+
+<!-- CAREFUL: The line number must be one i.e, where you have test(..) line only. -->
+
+`npx playwright show-trace PATH-TO-FILE___trace.zip`
+`npx playwright show-trace ./test-results/record1_demo-record-demo-test-chromium-retry1/trace.zip`
+Open `Trace Viewer` and open the last trace reports.
+NOTE: Traces are recorded only on retries (so make sure the value of `retries` is a non-zero value in `playwright.config.ts` file)
 
 We suggest that you begin by typing:
 
     `npx playwright test`
 
 And check out the following files:
-  - ./tests/example.spec.ts - Example end-to-end test
-  - ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
-  - ./playwright.config.ts - Playwright Test configuration
+
+- ./tests/example.spec.ts - Example end-to-end test
+- ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+- ./playwright.config.ts - Playwright Test configuration
 
 Visit https://playwright.dev/docs/intro for more information.
 
@@ -98,11 +104,11 @@ From pallete select: `Test: Install Playwright`
 ```bash
 $ npx playwright -h
 # Usage: npx playwright [options] [command]
-# 
+#
 # Options:
 #   -V, --version                          output the version number
 #   -h, --help                             display help for command
-# 
+#
 # Commands:
 #   open [options] [url]                   open page in browser specified via -b,
 #                                          --browser
@@ -169,12 +175,10 @@ Open browser in dark mode enabled (this will only work if the target website sup
 
 -- ISSUE WITH `--device` command on my manjaro currently; TODO: FIX ---
 
-
 Learn: You this command to get list of available devices you can use for `--device` option: `npx playwright codegen --target javascript -o ./tests/record4_demo.spec.ts --device=1`
 
 Learn: Below command throws error currently (please check my google doc file for follow up).
 `npx playwright codegen --target javascript -o ./tests/record4_demo.spec.ts --device="iPhone 11"`
-
 
 Some **curated options** of codegen help output:
 
@@ -198,9 +202,9 @@ All help text:
 ```bash
 $ npx playwright codegen -h
 # Usage: npx playwright codegen [options] [url]
-# 
+#
 # open page and generate code for user actions
-# 
+#
 # Options:
 # ### NOTE: ~Sahil: I have removed options that I have selected above in **curated list**
 #   --target <language>                  language to generate, one of javascript, playwright-test, python, python-async, python-pytest, csharp, csharp-mstest, csharp-nunit, java (default: "playwright-test")
@@ -216,7 +220,7 @@ $ npx playwright codegen -h
 #   -h, --help                           display help for command
 #
 # Examples:
-# 
+#
 #   $ codegen
 #   $ codegen --target=python
 #   $ codegen -b webkit https://example.com
