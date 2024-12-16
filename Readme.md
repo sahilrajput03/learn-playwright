@@ -12,7 +12,10 @@ I have **disabled** `webkit` browser in `playwright.config.ts` file because my m
 
 ## Installation via CLI
 
-Install browser via `npx playwright install`. In my case it installed following: ` Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.
+Install browser via `npx playwright install`. In my case it installed following:
+- ` Chromium 119.0.6045.9` (If you just want this then you can run `npx playwright install webkit` command instead.
+- `Firefox 118.0.1 `
+- `Webkit 17.4`
 
 Install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
 
