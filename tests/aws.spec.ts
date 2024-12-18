@@ -4,7 +4,7 @@ import { authenticator } from 'otplib';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
-// alias for above command: ptd ./path/to/file.spec.ts'
+// alias for above command: ptd ./tests/aws.spec.ts
 
 
 const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
@@ -16,6 +16,15 @@ if (!AWS_ACCOUNT_EMAIL || !AWS_ACCOUNT_PASSWORD || !AWS_AUTHENTICATOR_SECRET) {
     console.error('Please defined these env values in .env file:', 'AWS_ACCOUNT_EMAIL, AWS_ACCOUNT_PASSWORD, AWS_AUTHENTICATOR_SECRET')
     process.exit(1)
 }
+test.only('sample test', async ({ page }) => {
+    console.log('hey... 1')
+    await page.goto('https://sahilrajput.com');
+    console.log('hello... 2')
+    await page.pause()
+    await page.goto('https://blog.sahilrajput.com');
+    console.log('world... 3')
+    throw new Error('123')
+})
 
 const loginToAws = async (page) => {
     await page.goto('https://ap-south-1.console.aws.amazon.com/');
@@ -46,6 +55,9 @@ const openS3service = async (page) => {
     await page.getByTestId('services-search-result-link-s3').click();
 }
 
+
+const BUCKET_NAME = 'sahilrajput03-bucket123'
+
 // This test is expected to be run alone using `test.only(..)`
 test('create s3 bucket in aws', async ({ page }) => {
     await loginToAws(page)
@@ -54,14 +66,14 @@ test('create s3 bucket in aws', async ({ page }) => {
     await page.getByTestId('s3-lamb-container__button__create').click();
     await page.getByPlaceholder('myawsbucket').click();
     await page.getByPlaceholder('myawsbucket').fill('bucket1');
-    await page.getByPlaceholder('myawsbucket').fill('sahilrajput03-bucket123');
+    await page.getByPlaceholder('myawsbucket').fill(BUCKET_NAME);
     await page.getByText('Block all public access', { exact: true }).click();
     await page.getByText('I acknowledge that the').click();
     await page.getByTestId('buttonCreate').click();
     // NOTE: If you're getting error here that probabaly means the bucket is already created and you're getting error a bucket with same name alrady exists in aws page.
-    await expect(page.getByRole('link', { name: 'sahilrajput03-bucket123' })).toBeVisible();
+    await expect(page.getByRole('link', { name: BUCKET_NAME })).toBeVisible();
     // Assertion that bucket is listed on the page
-    await expect(page.getByRole('link', { name: 'sahilrajput03-bucket123' })).toBeVisible();
+    await expect(page.getByRole('link', { name: BUCKET_NAME })).toBeVisible();
 
 
     await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
@@ -74,12 +86,12 @@ test.only('delete aws bucket', async ({ page }) => {
     await openS3service(page)
 
     // Assertion that bucket is listed on the page
-    await expect(page.getByRole('link', { name: 'sahilrajput03-bucket123' })).toBeVisible();
+    await expect(page.getByRole('link', { name: BUCKET_NAME })).toBeVisible();
 
     await page.getByRole('radio', { name: 'Table Selection Select sahilrajput03-bucket123' }).check();
     await page.getByRole('button', { name: 'Delete' }).click();
-    await page.getByPlaceholder('sahilrajput03-bucket123').click();
-    await page.getByPlaceholder('sahilrajput03-bucket123').fill('sahilrajput03-bucket123');
+    await page.getByPlaceholder(BUCKET_NAME).click();
+    await page.getByPlaceholder(BUCKET_NAME).fill(BUCKET_NAME);
     await page.getByRole('button', { name: 'Delete bucket', exact: true }).click();
 
 
