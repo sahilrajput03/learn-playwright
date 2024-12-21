@@ -12,3 +12,5 @@ my-test-videos
 tests/storage-state/.auth/*
 !tests/storage-state/.auth/.keep
 
+tests/session-storage/.auth/*
+!tests/session-storage/.auth/.keep

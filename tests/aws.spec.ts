@@ -1,53 +1,18 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config'
-import { authenticator } from 'otplib';
+import fs from 'fs';
+import { awsLoginUrl } from './utils';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
 // alias for above command: ptd ./tests/aws.spec.ts
 
-
-const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
-const AWS_ACCOUNT_PASSWORD: string | undefined = process.env.AWS_ACCOUNT_PASSWORD;
-const AWS_AUTHENTICATOR_SECRET: string | undefined = process.env.AWS_AUTHENTICATOR_SECRET;
-
-
-if (!AWS_ACCOUNT_EMAIL || !AWS_ACCOUNT_PASSWORD || !AWS_AUTHENTICATOR_SECRET) {
-    console.error('Please defined these env values in .env file:', 'AWS_ACCOUNT_EMAIL, AWS_ACCOUNT_PASSWORD, AWS_AUTHENTICATOR_SECRET')
-    process.exit(1)
-}
-test.only('sample test', async ({ page }) => {
-    console.log('hey... 1')
-    await page.goto('https://sahilrajput.com');
-    console.log('hello... 2')
-    await page.pause()
-    await page.goto('https://blog.sahilrajput.com');
-    console.log('world... 3')
-    throw new Error('123')
-})
-
-const loginToAws = async (page) => {
-    await page.goto('https://ap-south-1.console.aws.amazon.com/');
-    await page.getByTestId('not-sign-in-with-iam').click();
-    await page.getByPlaceholder('username@example.com').click();
-    await page.getByPlaceholder('username@example.com').fill(AWS_ACCOUNT_EMAIL);
-    await page.getByRole('button', { name: 'Next' }).click();
-    await page.locator('#password').click();
-    await page.locator('#password').fill(AWS_ACCOUNT_PASSWORD);
-    await page.locator('#password').press('Enter');
+test('Verify aws login', async ({ page, context }) => {
+    await page.goto(awsLoginUrl);
+    // Assert "Console Home" on screen
+    await page.getByTestId('unifiedConsoleHeader').getByText('Console Home').click();
     // await page.pause()
-    await page.locator('#multi_mfa_swhw_radio_button_box div').first().click();
-    await page.getByRole('button', { name: 'Next' }).click();
-
-    const token = authenticator.generate(AWS_AUTHENTICATOR_SECRET)
-    await page.locator('#mfaCode').click();
-    await page.locator('#mfaCode').fill(token); // authenticator token is put automatically here!
-    await page.getByRole('button', { name: 'Submit' }).click();
-
-    // ---- NOTE ---- >>>> Since now I'm generating the token via this libraray using my secret of the authenticator app I do not need to enter the token from my google authenticator app manually now.
-    // * Please enter your authenticator code from your mobiile app manually with hand
-    // await page.pause(); // Sahil: no need to pause actually because playwright wait until the next selector is available.
-}
+})
 
 const openS3service = async (page) => {
     await page.getByTestId('awsc-concierge-input').click();
@@ -55,12 +20,16 @@ const openS3service = async (page) => {
     await page.getByTestId('services-search-result-link-s3').click();
 }
 
-
 const BUCKET_NAME = 'sahilrajput03-bucket123'
+
+// test.describe("s3 bucket tests", () => {
+
+// })
 
 // This test is expected to be run alone using `test.only(..)`
 test('create s3 bucket in aws', async ({ page }) => {
-    await loginToAws(page)
+    // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
+    await page.goto(awsLoginUrl);
     await openS3service(page)
 
     await page.getByTestId('s3-lamb-container__button__create').click();
@@ -75,14 +44,14 @@ test('create s3 bucket in aws', async ({ page }) => {
     // Assertion that bucket is listed on the page
     await expect(page.getByRole('link', { name: BUCKET_NAME })).toBeVisible();
 
-
     await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
 });
 
 
 // This test is expected to be run alone using `test.only(..)`
-test.only('delete aws bucket', async ({ page }) => {
-    await loginToAws(page)
+test('delete aws bucket', async ({ page }) => {
+    // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
+    await page.goto(awsLoginUrl);
     await openS3service(page)
 
     // Assertion that bucket is listed on the page
@@ -93,7 +62,6 @@ test.only('delete aws bucket', async ({ page }) => {
     await page.getByPlaceholder(BUCKET_NAME).click();
     await page.getByPlaceholder(BUCKET_NAME).fill(BUCKET_NAME);
     await page.getByRole('button', { name: 'Delete bucket', exact: true }).click();
-
 
     await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
 });

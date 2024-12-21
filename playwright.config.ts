@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { githubStorageStateFile } from './tests/utils';
+import { awsStorageStateFile, githubStorageStateFile } from './tests/utils';
 
 // Read environment variables from file: https://github.com/motdotla/dotenv
 // require('dotenv').config();
@@ -56,18 +56,21 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
 
+    // *********************
+    // * Authentication    *
+    // *********************
     // src: https://playwright.dev/docs/auth
     // Setup project (Sahil: We can use this project as a dependency for multiple browsers by
     // adding 'setup' in dependencies property of each browser specified below.
     // { name: 'setup', testMatch: /.*\.setup\.ts/ },
 
-
+    //  * MAGIC *
     // Login to github and save storage to file in `githubStorageStateFile`
-    { name: 'setup-github', testMatch: /auth-github\.setup\.ts/ },
+    { name: 'setup-github-login', testMatch: "tests/auth/auth-github.setup.ts" },
+    // Login to aws and save storage to file in `awsStorageStateFile`
+    { name: 'setup-aws-login', testMatch: "tests/auth/auth-aws.setup.ts" },
 
 
-    // & TODO: Make github and aws as different dependencies here
-    // and run and test them too. YIKES!!!
 
     // ***************
     // * Browsers    *
@@ -76,10 +79,17 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        // Use prepared auth state.
-        storageState: githubStorageStateFile,
+        // Note to Sahil: Only use one of below `storageState` as per your need of automation testing
+        storageState: githubStorageStateFile, // Use prepared auth state.
+        // storageState: awsStorageStateFile, // Use prepared auth state.
       },
-      dependencies: ['setup-github'], // if we use this then tests specified in `setup-github` are run first.
+      //  * MAGIC *
+      // Note 1: Dependencies are run before any tests are run
+      // Note 2 to Sahil:  Toggle comment/uncomment one of below dependencies as per need to login once
+      //                   and then any further test runs via `ptd ./tests/aws.spec.ts` or
+      //                   `ptd ./tests/github.spec.ts`
+      dependencies: ['setup-github-login'], // if we use this then tests specified in `setup-github` are run first.
+      // dependencies: ['setup-aws-login'], // if we use this then tests specified in `setup-github` are run first.
     },
     {
       name: 'firefox',

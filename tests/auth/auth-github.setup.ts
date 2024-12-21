@@ -1,17 +1,33 @@
 // source - https://playwright.dev/docs/auth
 
 import { test as setup, expect } from '@playwright/test';
-import { githubStorageStateFile } from '../utils';
+import { githubLoginUrl, githubStorageStateFile } from '../utils';
+import { authenticator } from 'otplib';
 
-// Sahil: For usage of this refer file playwright.config.ts file (config.proejcts[0].name[='setup'])
-setup('authenticate', async ({ page }) => {
+const GITHUB_ACCOUNT_EMAIL: string | undefined = process.env.GITHUB_ACCOUNT_EMAIL;
+const GITHUB_ACCOUNT_PASSWORD: string | undefined = process.env.GITHUB_ACCOUNT_PASSWORD;
+const GITHUB_AUTHENTICATOR_SECRET: string | undefined = process.env.GITHUB_AUTHENTICATOR_SECRET;
+
+
+if (!GITHUB_ACCOUNT_EMAIL || !GITHUB_ACCOUNT_PASSWORD || !GITHUB_AUTHENTICATOR_SECRET) {
+    console.error('Please defined these env values in .env file:', 'GITHUB_ACCOUNT_EMAIL, GITHUB_ACCOUNT_PASSWORD, GITHUB_AUTHENTICATOR_SECRET')
+    process.exit(1)
+}
+
+const loginToGithub = async (page) => {
     // Perform authentication steps. Replace these actions with your own.
-    await page.goto('https://github.com/login');
-    await page.getByLabel('Username or email address').fill('sahilrajput03');
-    await page.getByLabel('Password').fill('Philips@@786');
+    await page.goto(githubLoginUrl);
+    await page.getByLabel('Username or email address').fill(GITHUB_ACCOUNT_EMAIL);
+    await page.getByLabel('Password').fill(GITHUB_ACCOUNT_PASSWORD);
     await page.getByRole('button', { name: 'Sign in', exact: true }).click();
     // Wait until the page receives the cookies.
-    //
+
+
+    const token = authenticator.generate(GITHUB_AUTHENTICATOR_SECRET)
+    await page.getByRole('link', { name: 'Use your authenticator app' }).click();
+    await page.getByPlaceholder('XXXXXX').fill(token);
+
+
     // Sometimes login flow sets cookies in the process of several redirects.
     // Wait for the final URL to ensure that the cookies are actually set.
     await page.waitForURL('https://github.com/');
@@ -23,7 +39,11 @@ setup('authenticate', async ({ page }) => {
     await page.getByLabel('Your profile').click();
 
     // End of authentication steps.
+}
 
+// Sahil: For usage of this refer file playwright.config.ts file (config.proejcts[0].name[='setup'])
+setup('authenticate', async ({ page }) => {
+    await loginToGithub(page)
     // * Save the current state of the browser's storage (including
     // cookies and local storage) to a file specified by authFile.
     // This can be useful for reusing the authenticated state in
