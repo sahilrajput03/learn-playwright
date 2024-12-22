@@ -5,7 +5,7 @@ import { awsLoginUrl } from './utils';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
-// alias for above command: ptd ./tests/aws.spec.ts
+//  alias for above command: ptd ./tests/aws.spec.ts
 
 test('Verify aws login', async ({ page, context }) => {
     await page.goto(awsLoginUrl);

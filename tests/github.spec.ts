@@ -4,7 +4,7 @@ import { githubLoginUrl } from './utils';
 
 // & Command to test this file alone:
 //  npx playwright test --project=chromium ./tests/github.spec.ts --debug
-// alias for above command: ptd ./tests/github.spec.ts
+//  alias for above command: ptd ./tests/github.spec.ts
 
 test.only('Verify github login', async ({ page }) => {
     await page.goto(githubLoginUrl);
