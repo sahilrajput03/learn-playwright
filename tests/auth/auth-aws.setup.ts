@@ -3,6 +3,7 @@
 import { test as setup, expect } from '@playwright/test';
 import { awsLoginUrl, awsStorageStateFile } from '../utils';
 import { authenticator } from 'otplib';
+import 'dotenv/config'
 
 const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
 const AWS_ACCOUNT_PASSWORD: string | undefined = process.env.AWS_ACCOUNT_PASSWORD;

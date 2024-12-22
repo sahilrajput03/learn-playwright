@@ -3,11 +3,11 @@
 import { test as setup, expect } from '@playwright/test';
 import { githubLoginUrl, githubStorageStateFile } from '../utils';
 import { authenticator } from 'otplib';
+import 'dotenv/config'
 
 const GITHUB_ACCOUNT_EMAIL: string | undefined = process.env.GITHUB_ACCOUNT_EMAIL;
 const GITHUB_ACCOUNT_PASSWORD: string | undefined = process.env.GITHUB_ACCOUNT_PASSWORD;
 const GITHUB_AUTHENTICATOR_SECRET: string | undefined = process.env.GITHUB_AUTHENTICATOR_SECRET;
-
 
 if (!GITHUB_ACCOUNT_EMAIL || !GITHUB_ACCOUNT_PASSWORD || !GITHUB_AUTHENTICATOR_SECRET) {
     console.error('Please defined these env values in .env file:', 'GITHUB_ACCOUNT_EMAIL, GITHUB_ACCOUNT_PASSWORD, GITHUB_AUTHENTICATOR_SECRET')

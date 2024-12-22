@@ -64,12 +64,12 @@ export default defineConfig({
     // adding 'setup' in dependencies property of each browser specified below.
     // { name: 'setup', testMatch: /.*\.setup\.ts/ },
 
+    // ❤️ Usage on "sahilrajput03/Learn Playwright @ YT: https://www.youtube.com/playlist?list=PLBfwD_NnDB3q5MaTqVNLpcVOFTbyjxQRN
     //  * MAGIC *
     // Login to github and save storage to file in `githubStorageStateFile`
     { name: 'setup-github-login', testMatch: "tests/auth/auth-github.setup.ts" },
     // Login to aws and save storage to file in `awsStorageStateFile`
     { name: 'setup-aws-login', testMatch: "tests/auth/auth-aws.setup.ts" },
-
 
 
     // ***************
@@ -88,7 +88,7 @@ export default defineConfig({
       // Note 2 to Sahil:  Toggle comment/uncomment one of below dependencies as per need to login once
       //                   and then any further test runs via `ptd ./tests/aws.spec.ts` or
       //                   `ptd ./tests/github.spec.ts`
-      dependencies: ['setup-github-login'], // if we use this then tests specified in `setup-github` are run first.
+      // dependencies: ['setup-github-login'], // if we use this then tests specified in `setup-github` are run first.
       // dependencies: ['setup-aws-login'], // if we use this then tests specified in `setup-github` are run first.
     },
     {
