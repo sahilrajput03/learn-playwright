@@ -31,10 +31,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   // Reporter to use. See https://playwright.dev/docs/test-reporters
+  // ? Default
   // reporter: 'html',
-  // ? LEARN: To disable opening of report on test failure
+  // ? LEARN: To open only on test failure
   // reporter: [['html', { open: 'on-failure' }] ],
-  reporter: [['html', { open: 'never' }]],
+  // ? LEARN: To disable opening of report on test failure
+  reporter: [['html', { open: 'never' }] ],
 
   // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions.
   // LEARN: This feature does not work well in linux - 13 Nov, 2023
