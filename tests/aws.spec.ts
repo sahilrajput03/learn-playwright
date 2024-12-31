@@ -106,14 +106,92 @@ test.describe.skip('s3 bucket', () => {
     });
 })
 
+const AWS_ACCOUNT_ID = "234149371321"
+const AWS_REGION = "ap-south-1"
+const AWS_REPO_NAME = "sahilrajput-ecr-repo"
+const AWS_CLUSTER_NAME = "cosmos-cluster"
+
+const taskDefinitionName = 'dev-backend-app-task'
+const AWS_IMAGE_NAME_WITH_TAG = `${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${AWS_REPO_NAME}:latest`
+// '234149371321.dkr.ecr.ap-south-1.amazonaws.com/sahilrajput-ecr-repo:latest'
+
+const createTaskDefinition = async ({ page }) => {
+    await page.getByTestId('awsc-concierge-input').click();
+    await page.getByTestId('awsc-concierge-input').fill('ecs');
+    await page.getByTestId('services-search-result-link-ecs').click();
+    await page.getByRole('link', { name: 'Task definitions' }).click();
+    await page.getByRole('button', { name: 'Create new task definition' }).click();
+    await page.getByTestId('create-new').getByRole('menuitem', { name: 'Create new task definition' }).click();
+    await page.getByPlaceholder('Task definition family name').click();
+    await page.getByPlaceholder('Task definition family name').fill(taskDefinitionName);
+
+    await page.getByRole('button', { name: 'OS, Architecture, Network mode Operating system/Architecture Linux/X86_64' }).click();
+    await page.getByText('Linux/ARM64').first().click();
+    await page.getByRole('button', { name: 'Task size CPU CPU 1 vCPU' }).click();
+    await page.getByText('.5 vCPU', { exact: true }).click();
+    await page.getByRole('button', { name: 'Task size Memory Memory 3 GB' }).click();
+    await page.getByText('1 GB', { exact: true }).click();
+    await page.getByPlaceholder('wordpress').click();
+    await page.getByPlaceholder('wordpress').fill('container1');
+    await page.getByPlaceholder('repository-uri/image:tag').click();
+    await page.getByPlaceholder('repository-uri/image:tag').fill(AWS_IMAGE_NAME_WITH_TAG);
+    await page.getByPlaceholder('80').click();
+    await page.getByPlaceholder('80').press('ControlOrMeta+a');
+    await page.getByPlaceholder('80').fill('3000');
+    await page.getByRole('button', { name: 'HealthCheck - optional' }).click();
+    await page.getByPlaceholder('CMD-SHELL, curl -f http://').click();
+    await page.getByPlaceholder('CMD-SHELL, curl -f http://').fill('CMD-SHELL, curl -f http://localhost:3000/health || exit 1');
+    await page.getByRole('button', { name: 'Create', exact: true }).click();
+    // Assert sucess message
+    await expect(page.getByTestId('TaskDefDetail').getByText('Task definition successfully')).toBeVisible();
+}
+
+const deleteTaskDefinition = async ({ page }) => {
+    await page.getByTestId('awsc-concierge-input').click();
+    await page.getByTestId('awsc-concierge-input').fill('ecs');
+    await page.getByTestId('services-search-result-link-ecs').click();
+    await page.getByRole('link', { name: 'Task definitions' }).click();
+    await page.getByRole('link', { name: 'dev-backend-app-task' }).click();
+    await page.getByRole('link', { name: 'dev-backend-app-task:' }).click();
+    await page.getByRole('button', { name: 'Actions' }).click();
+    await page.getByRole('menuitem', { name: 'Deregister' }).click();
+    await page.getByRole('button', { name: 'Deregister' }).click();
+    // Assert for deregister
+    await expect(
+        page
+            .getByTestId('TaskDefDetail')
+            .getByText(/dev-backend-app-task:\d+ has been successfully deregistered\./)
+    ).toBeVisible();
+
+    await page.getByRole('button', { name: 'Actions' }).click();
+    await page.getByRole('menuitem', { name: 'Delete' }).click();
+    await page.getByPlaceholder('delete').click();
+    await page.getByPlaceholder('delete').fill('delete');
+    await page.getByRole('button', { name: 'Delete' }).click();
+    // Assert for deletion
+    await expect(
+        page
+            .getByTestId('TaskDefDetail')
+            .getByText(/dev-backend-app-task:\d+ has been successfully submitted for deletion\./)
+    ).toBeVisible();
+}
 
 test.describe.only('ecs', () => {
     // This test is expected to be run alone using `test.only(..)`
     test('create a task definition in ecs in aws', async () => {
         const page = await context.newPage(); // open a new tab
-
-        // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
         await page.goto(awsLoginUrl);
+
+        await createTaskDefinition({ page })
+
+        await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    });
+
+    test('delete a task definition in ecs in aws', async () => {
+        const page = await context.newPage(); // open a new tab
+        await page.goto(awsLoginUrl);
+
+        await deleteTaskDefinition({ page })
 
         await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
     });
