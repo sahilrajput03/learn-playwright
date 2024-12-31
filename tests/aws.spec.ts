@@ -152,39 +152,99 @@ const deleteTaskDefinition = async ({ page }) => {
     await page.getByTestId('services-search-result-link-ecs').click();
     await page.getByRole('link', { name: 'Task definitions' }).click();
     await page.getByRole('link', { name: 'dev-backend-app-task' }).click();
-    await page.getByRole('link', { name: 'dev-backend-app-task:' }).click();
+
+    // Delete all task definitions
+    await page.getByLabel('Tasks selection 0 task').first().click();
+
     await page.getByRole('button', { name: 'Actions' }).click();
     await page.getByRole('menuitem', { name: 'Deregister' }).click();
     await page.getByRole('button', { name: 'Deregister' }).click();
+
+    // await page.pause() // & for debugging only
+
     // Assert for deregister
     await expect(
         page
-            .getByTestId('TaskDefDetail')
-            .getByText(/dev-backend-app-task:\d+ has been successfully deregistered\./)
-    ).toBeVisible();
-
-    await page.getByRole('button', { name: 'Actions' }).click();
-    await page.getByRole('menuitem', { name: 'Delete' }).click();
-    await page.getByPlaceholder('delete').click();
-    await page.getByPlaceholder('delete').fill('delete');
-    await page.getByRole('button', { name: 'Delete' }).click();
-    // Assert for deletion
-    await expect(
-        page
-            .getByTestId('TaskDefDetail')
-            .getByText(/dev-backend-app-task:\d+ has been successfully submitted for deletion\./)
+            .getByTestId('TaskDefFamilyDetail')
+            .getByText(/dev-backend-app-task.+been successfully deregistered\./)
     ).toBeVisible();
 }
 
+const createService = async ({ page }) => {
+    await page.getByTestId('awsc-concierge-input').click();
+    await page.getByTestId('awsc-concierge-input').fill('ecs');
+    await page.getByTestId('services-search-result-link-ecs').click();
+    await page.getByRole('link', { name: 'cosmos-cluster' }).click();
+    await page.getByRole('row', { name: 'No services No services to' }).getByTestId('createServiceButton').click();
+
+    await page.getByLabel('Capacity provider strategy').check();
+    await page.getByLabel('Use custom (Advanced)').check();
+    await page.getByLabel('Family', { exact: true }).click();
+    await page.getByText('dev-backend-app-task').first().click();
+    await page.getByLabel('Service name').click();
+    await page.getByLabel('Service name').fill('my-api-service');
+    await page.getByLabel('Desired tasks').click();
+    await page.getByLabel('Desired tasks').press('ControlOrMeta+a');
+    await page.getByLabel('Desired tasks').fill('2');
+    await page.getByRole('button', { name: 'Load balancing - optional' }).click();
+    await page.getByRole('button', { name: 'Load balancer type None' }).click();
+    await page.getByText('Application Load Balancer', { exact: true }).click();
+    await page.getByLabel('Load balancer name').click();
+    await page.getByLabel('Load balancer name').fill('my-lb');
+    await page.getByRole('button', { name: 'Service auto scaling -' }).click();
+    await page.getByText('Use service auto scaling').click();
+    await page.getByLabel('Minimum number of tasks').click();
+    await page.getByLabel('Minimum number of tasks').fill('2');
+    await page.getByLabel('Maximum number of tasks').click();
+    await page.getByLabel('Maximum number of tasks').fill('4');
+    await page.getByPlaceholder('Policy name').click();
+    await page.getByPlaceholder('Policy name').fill('my-autoscaling-policy-1');
+
+    await page.getByLabel('ECS service metric').click();
+    await page.getByText('ECSServiceAverageCPUUtilization').first().click();
+
+    await page.getByPlaceholder('70').click();
+    await page.getByPlaceholder('70').fill('70');
+    await page.getByRole('button', { name: 'Create', exact: true }).click();
+
+    // click refresh button every 5 seconds
+    const timer = setInterval(() => {
+        page.getByLabel('Refresh services').click();
+    }, 5_000)
+
+    // Creating service can take upto 5 mins of time so we have set timeout accordingly.
+    // Sahil: In my experience it takes around 3 mins of time.
+    const timeout = 300_000 // Timeout in milliseconds (5 minutes = 300,000 ms)
+    await expect(page.getByRole('link', { name: 'my-api-service' })).toBeVisible({ timeout });
+    clearInterval(timer)
+}
+
+const deleteService = async ({ page }) => {
+    await page.getByTestId('awsc-concierge-input').click();
+    await page.getByTestId('awsc-concierge-input').fill('ecs');
+    await page.getByTestId('services-search-result-link-ecs').click();
+    await page.getByRole('link', { name: 'cosmos-cluster' }).click();
+
+    await page.getByRole('link', { name: 'my-api-service' }).click();
+    await page.getByRole('button', { name: 'Delete service' }).click();
+    await page.getByText('Force delete', { exact: true }).click();
+    await page.getByPlaceholder('delete').click();
+    await page.getByPlaceholder('delete').fill('delete');
+    await page.getByRole('button', { name: 'Delete', exact: true }).click();
+    const timeout = 300_000 // Timeout in milliseconds (5 minutes = 300,000 ms)
+    await expect(page.getByTestId('ClusterDetail').getByText('Successfully deleted my-api-')).toBeVisible({ timeout });
+}
+
+// & Tip: You can simply put `.only` for the 1st and 3rd test to create task definition and service in a single go.
 test.describe.only('ecs', () => {
     // This test is expected to be run alone using `test.only(..)`
-    test('create a task definition in ecs in aws', async () => {
+    test.only('create a task definition in ecs in aws', async () => {
         const page = await context.newPage(); // open a new tab
         await page.goto(awsLoginUrl);
 
         await createTaskDefinition({ page })
 
-        await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
     });
 
     test('delete a task definition in ecs in aws', async () => {
@@ -193,6 +253,24 @@ test.describe.only('ecs', () => {
 
         await deleteTaskDefinition({ page })
 
-        await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    });
+
+    test.only('create a service in ecs in aws', async () => {
+        const page = await context.newPage(); // open a new tab
+        await page.goto(awsLoginUrl);
+
+        await createService({ page })
+
+        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    });
+
+    test('delete a service in ecs in aws', async () => {
+        const page = await context.newPage(); // open a new tab
+        await page.goto(awsLoginUrl);
+
+        await deleteService({ page })
+
+        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
     });
 })
