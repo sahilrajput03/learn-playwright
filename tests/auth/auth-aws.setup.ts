@@ -5,6 +5,11 @@ import { awsLoginUrl, awsStorageStateFile } from '../utils';
 import { authenticator } from 'otplib';
 import 'dotenv/config'
 
+// ❤️ Usage on "sahilrajput03/Learn Playwright @ YT: https://www.youtube.com/playlist?list=PLBfwD_NnDB3q5MaTqVNLpcVOFTbyjxQRN
+
+// & Command to test this file alone:
+//  npx playwright test --project=setup-aws-login --debug
+
 const AWS_ACCOUNT_EMAIL: string | undefined = process.env.AWS_ACCOUNT_EMAIL;
 const AWS_ACCOUNT_PASSWORD: string | undefined = process.env.AWS_ACCOUNT_PASSWORD;
 const AWS_AUTHENTICATOR_SECRET: string | undefined = process.env.AWS_AUTHENTICATOR_SECRET;

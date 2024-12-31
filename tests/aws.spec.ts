@@ -9,6 +9,14 @@ import { awsLoginUrl } from './utils';
 //  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
 //  alias for above command: ptd ./tests/aws.spec.ts
 
+// * Enable disable sloMo mode for this file
+test.use({
+    launchOptions: {
+        // headless: false,
+        // slowMo: 3000, // (TESTED WORKS)
+    },
+});
+
 test('Verify aws login', async ({ page, context }) => {
     await page.goto(awsLoginUrl);
     // Assert "Console Home" on screen
@@ -46,7 +54,7 @@ test('create s3 bucket in aws', async ({ page }) => {
     // Assertion that bucket is listed on the page
     await expect(page.getByRole('link', { name: BUCKET_NAME })).toBeVisible();
 
-    await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
 });
 
 
@@ -65,5 +73,5 @@ test('delete aws bucket', async ({ page }) => {
     await page.getByPlaceholder(BUCKET_NAME).fill(BUCKET_NAME);
     await page.getByRole('button', { name: 'Delete bucket', exact: true }).click();
 
-    await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
 });

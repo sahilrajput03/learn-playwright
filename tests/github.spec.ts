@@ -8,6 +8,14 @@ import { githubLoginUrl } from './utils';
 //  npx playwright test --project=chromium ./tests/github.spec.ts --debug
 //  alias for above command: ptd ./tests/github.spec.ts
 
+// * Enable disable sloMo mode for this file
+test.use({
+    launchOptions: {
+        // headless: false,
+        // slowMo: 3000, // (TESTED WORKS)
+    },
+});
+
 test.only('Verify github login', async ({ page }) => {
     await page.goto(githubLoginUrl);
     await page.waitForURL('https://github.com/');

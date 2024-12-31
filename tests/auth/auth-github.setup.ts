@@ -5,6 +5,9 @@ import { githubLoginUrl, githubStorageStateFile } from '../utils';
 import { authenticator } from 'otplib';
 import 'dotenv/config'
 
+// & Command to test this file alone:
+//  npx playwright test --project=setup-github-login --debug
+
 const GITHUB_ACCOUNT_EMAIL: string | undefined = process.env.GITHUB_ACCOUNT_EMAIL;
 const GITHUB_ACCOUNT_PASSWORD: string | undefined = process.env.GITHUB_ACCOUNT_PASSWORD;
 const GITHUB_AUTHENTICATOR_SECRET: string | undefined = process.env.GITHUB_AUTHENTICATOR_SECRET;

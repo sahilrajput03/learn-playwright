@@ -80,8 +80,8 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         // Note to Sahil: Only use one of below `storageState` as per your need of automation testing
-        storageState: githubStorageStateFile, // Use prepared auth state.
-        // storageState: awsStorageStateFile, // Use prepared auth state.
+        // storageState: githubStorageStateFile, // Use prepared auth state.
+        storageState: awsStorageStateFile, // Use prepared auth state.
       },
       //  * MAGIC *
       // Note 1: Dependencies are run before any tests are run
