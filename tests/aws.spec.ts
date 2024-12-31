@@ -5,8 +5,8 @@ import { awsLoginUrl } from './utils';
 // ❤️ Usage on "sahilrajput03/Learn Playwright @ YT: https://www.youtube.com/playlist?list=PLBfwD_NnDB3q5MaTqVNLpcVOFTbyjxQRN
 
 // & Command to test this file alone:
-//  npx playwright test --project=chromium ./tests/aws2.spec.ts --debug
-//  alias for above command: ptd ./tests/aws2.spec.ts
+//  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
+//  alias for above command: ptd ./tests/aws.spec.ts
 
 const { chromium } = require('playwright');
 
