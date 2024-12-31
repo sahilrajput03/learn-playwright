@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import 'dotenv/config'
-import fs from 'fs';
 import { awsLoginUrl } from './utils';
 
 // ❤️ Usage on "sahilrajput03/Learn Playwright @ YT: https://www.youtube.com/playlist?list=PLBfwD_NnDB3q5MaTqVNLpcVOFTbyjxQRN
