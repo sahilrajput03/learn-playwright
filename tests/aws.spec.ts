@@ -5,8 +5,34 @@ import { awsLoginUrl } from './utils';
 // ❤️ Usage on "sahilrajput03/Learn Playwright @ YT: https://www.youtube.com/playlist?list=PLBfwD_NnDB3q5MaTqVNLpcVOFTbyjxQRN
 
 // & Command to test this file alone:
-//  npx playwright test --project=chromium ./tests/aws.spec.ts --debug
-//  alias for above command: ptd ./tests/aws.spec.ts
+//  npx playwright test --project=chromium ./tests/aws2.spec.ts --debug
+//  alias for above command: ptd ./tests/aws2.spec.ts
+
+const { chromium } = require('playwright');
+
+// ********************************  ********************************
+// * Using single browser session to perform all tests --- We do this by sharing the context of
+// *        a browser i.e, `context` below instead of destructuring `page` from the test callback.
+let browser;
+let context
+// let page
+
+test.beforeAll(async () => {
+    // Launch the browser before running tests
+    browser = await chromium.launch({ headless: false }); // Set headless to true/false as needed
+
+    // Sahil: We use same browser so we share context between different tests
+    context = await browser.newContext(); // Create a new browser context
+
+    // & Sahil: Use below statement to perform all tests on same page instead of opening a new page each time.
+    // page = await context.newPage(); // open a new tab
+});
+
+test.afterAll(async () => {
+    // Close the browser after all tests
+    await browser.close();
+});
+// ********************************  ********************************
 
 // * Enable disable sloMo mode for this file
 test.use({
@@ -24,12 +50,10 @@ const openS3service = async (page) => {
 
 const BUCKET_NAME = 'sahilrajput03-bucket123'
 
-// test.describe("s3 bucket tests", () => {
-
-// })
-
 test.describe('s3 bucket', () => {
-    test('Verify aws login', async ({ page, context }) => {
+    test('Verify aws login', async () => {
+        const page = await context.newPage(); // open a new tab
+
         await page.goto(awsLoginUrl);
         // Assert "Console Home" on screen
         await page.getByTestId('unifiedConsoleHeader').getByText('Console Home').click();
@@ -37,7 +61,9 @@ test.describe('s3 bucket', () => {
     })
 
     // This test is expected to be run alone using `test.only(..)`
-    test('create s3 bucket in aws', async ({ page }) => {
+    test('create s3 bucket in aws', async () => {
+        const page = await context.newPage(); // open a new tab
+
         // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
         await page.goto(awsLoginUrl);
         await openS3service(page)
@@ -59,7 +85,9 @@ test.describe('s3 bucket', () => {
 
 
     // This test is expected to be run alone using `test.only(..)`
-    test('delete aws bucket', async ({ page }) => {
+    test('delete aws bucket', async () => {
+        const page = await context.newPage(); // open a new tab
+
         // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
         await page.goto(awsLoginUrl);
         await openS3service(page)

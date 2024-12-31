@@ -36,7 +36,7 @@ export default defineConfig({
   // ? LEARN: To open only on test failure
   // reporter: [['html', { open: 'on-failure' }] ],
   // ? LEARN: To disable opening of report on test failure
-  reporter: [['html', { open: 'never' }] ],
+  reporter: [['html', { open: 'never' }]],
 
   // Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions.
   // LEARN: This feature does not work well in linux - 13 Nov, 2023
@@ -93,10 +93,12 @@ export default defineConfig({
       // dependencies: ['setup-github-login'], // if we use this then tests specified in `setup-github` are run first.
       // dependencies: ['setup-aws-login'], // if we use this then tests specified in `setup-github` are run first.
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+
+    // * Note to Sahil: Disable firefox for now because chrome is enough
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
     // ! Sahil: Disabled webkit browser for my manjaro because webkit is not able to run at all.
     // {
