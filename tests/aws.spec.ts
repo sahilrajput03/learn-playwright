@@ -50,16 +50,17 @@ const openS3service = async (page) => {
 
 const BUCKET_NAME = 'sahilrajput03-bucket123'
 
-test.describe('s3 bucket', () => {
-    test('Verify aws login', async () => {
-        const page = await context.newPage(); // open a new tab
+test.beforeEach(async () => {
+    const page = await context.newPage(); // open a new tab
 
-        await page.goto(awsLoginUrl);
-        // Assert "Console Home" on screen
-        await page.getByTestId('unifiedConsoleHeader').getByText('Console Home').click();
-        // await page.pause()
-    })
+    // Verify aws login
+    await page.goto(awsLoginUrl);
+    // Assert "Console Home" on screen
+    await expect(page.getByTestId('unifiedConsoleHeader').getByText('Console Home')).toBeVisible();
+    // await page.pause()
+})
 
+test.describe.skip('s3 bucket', () => {
     // This test is expected to be run alone using `test.only(..)`
     test('create s3 bucket in aws', async () => {
         const page = await context.newPage(); // open a new tab
@@ -105,3 +106,15 @@ test.describe('s3 bucket', () => {
     });
 })
 
+
+test.describe.only('ecs', () => {
+    // This test is expected to be run alone using `test.only(..)`
+    test('create a task definition in ecs in aws', async () => {
+        const page = await context.newPage(); // open a new tab
+
+        // await loginToAws(page) // moved to `tests/auth/auth-aws.setup.ts`
+        await page.goto(awsLoginUrl);
+
+        await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+    });
+})
