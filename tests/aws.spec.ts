@@ -11,7 +11,7 @@ import { awsLoginUrl } from './utils';
 const { chromium } = require('playwright');
 
 // ********************************  ********************************
-// * Using single browser session to perform all tests --- We do this by sharing the context of
+// * Using a single browser session to perform all tests --- We do this by sharing the context of
 // *        a browser i.e, `context` below instead of destructuring `page` from the test callback.
 let browser;
 let context
@@ -24,7 +24,7 @@ test.beforeAll(async () => {
     // Sahil: We use same browser so we share context between different tests
     context = await browser.newContext(); // Create a new browser context
 
-    // & Sahil: Use below statement to perform all tests on same page instead of opening a new page each time.
+    // & Sahil: Use below statement to perform all tests on the same page instead of opening a new page each time.
     // page = await context.newPage(); // open a new tab
 });
 
