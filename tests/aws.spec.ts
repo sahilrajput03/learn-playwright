@@ -34,7 +34,7 @@ test.afterAll(async () => {
 });
 // ********************************  ********************************
 
-// * Enable disable sloMo mode for this file
+// * Enable disable slowMo mode for this file
 test.use({
     launchOptions: {
         // headless: false,
@@ -238,7 +238,7 @@ const deleteService = async ({ page }) => {
 // & You can:
 // & 1. create ECR repo with your aws bash script: `express-app-1/scripts/aws/repo-create.sh`
 test.describe.only('ecs', () => {
-    test.describe.only('create task definition and service', async () => {
+    test.describe('create task definition and service', async () => {
         // This test is expected to be run alone using `test.only(..)`
         test('create a task definition in ecs in aws', async () => {
             const page = await context.newPage(); // open a new tab
@@ -259,7 +259,7 @@ test.describe.only('ecs', () => {
         });
     })
 
-    test.describe('delete task definition and service', async () => {
+    test.describe.only('delete task definition and service', async () => {
         test('delete a task definition in ecs in aws', async () => {
             const page = await context.newPage(); // open a new tab
             await page.goto(awsLoginUrl);
