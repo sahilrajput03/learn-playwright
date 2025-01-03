@@ -235,42 +235,47 @@ const deleteService = async ({ page }) => {
     await expect(page.getByTestId('ClusterDetail').getByText('Successfully deleted my-api-')).toBeVisible({ timeout });
 }
 
-// & Tip: You can simply put `.only` for the 1st and 3rd test to create task definition and service in a single go.
+// & You can:
+// & 1. create ECR repo with your aws bash script: `express-app-1/scripts/aws/repo-create.sh`
 test.describe.only('ecs', () => {
-    // This test is expected to be run alone using `test.only(..)`
-    test.only('create a task definition in ecs in aws', async () => {
-        const page = await context.newPage(); // open a new tab
-        await page.goto(awsLoginUrl);
+    test.describe.only('create task definition and service', async () => {
+        // This test is expected to be run alone using `test.only(..)`
+        test('create a task definition in ecs in aws', async () => {
+            const page = await context.newPage(); // open a new tab
+            await page.goto(awsLoginUrl);
 
-        await createTaskDefinition({ page })
+            await createTaskDefinition({ page })
 
-        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
-    });
+            // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        });
 
-    test('delete a task definition in ecs in aws', async () => {
-        const page = await context.newPage(); // open a new tab
-        await page.goto(awsLoginUrl);
+        test('create a service in ecs in aws', async () => {
+            const page = await context.newPage(); // open a new tab
+            await page.goto(awsLoginUrl);
 
-        await deleteTaskDefinition({ page })
+            await createService({ page })
 
-        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
-    });
+            // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        });
+    })
 
-    test.only('create a service in ecs in aws', async () => {
-        const page = await context.newPage(); // open a new tab
-        await page.goto(awsLoginUrl);
+    test.describe('delete task definition and service', async () => {
+        test('delete a task definition in ecs in aws', async () => {
+            const page = await context.newPage(); // open a new tab
+            await page.goto(awsLoginUrl);
 
-        await createService({ page })
+            await deleteTaskDefinition({ page })
 
-        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
-    });
+            // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        });
 
-    test('delete a service in ecs in aws', async () => {
-        const page = await context.newPage(); // open a new tab
-        await page.goto(awsLoginUrl);
+        test('delete a service in ecs in aws', async () => {
+            const page = await context.newPage(); // open a new tab
+            await page.goto(awsLoginUrl);
 
-        await deleteService({ page })
+            await deleteService({ page })
 
-        // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
-    });
+            // await page.pause(); // always keep it here so i can see the final results in browser otherwise browser is closed as soon as test is complete.
+        });
+    })
 })
