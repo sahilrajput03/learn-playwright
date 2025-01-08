@@ -177,7 +177,8 @@ const createService = async ({ page }) => {
     await page.getByRole('link', { name: 'cosmos-cluster' }).click();
     await page.getByRole('row', { name: 'No services No services to' }).getByTestId('createServiceButton').click();
 
-    await page.getByLabel('Capacity provider strategy').check();
+    // await page.getByLabel('Capacity provider strategy').check(); // no need because this is selected by default
+
     await page.getByLabel('Use custom (Advanced)').check();
     await page.getByLabel('Family', { exact: true }).click();
     await page.getByText('dev-backend-app-task').first().click();
