@@ -33,7 +33,6 @@ alias ptd='npx playwright test --project=chromium --debug'
 ptd ./path/to/file.spec.ts
 
 ##### Watch scripts #####
-
 # ❤️  Native way (source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692)
 alias ptwNative='PWTEST_WATCH=1 npx playwright test --project=chromium'
 # ❤️  With UI mode
