@@ -14,6 +14,7 @@ I have **disabled** `webkit` browser in `playwright.config.ts` file because my m
 ## Installation via CLI
 
 Install browser via `npx playwright install`. In my case it installed following:
+
 - ` Chromium 119.0.6045.9` (If you just want this then you can run `npx playwright install webkit` command instead.
 - `Firefox 118.0.1 `
 - `Webkit 17.4`
@@ -29,16 +30,18 @@ alias pth='npx playwright test --headed --project=chromium'
 # ❤️ 🚀  LEARN: Open `Playwright Inspector` (helpful in debugging & step by step execution)
 alias ptd='npx playwright test --project=chromium --debug'
 # ❤️ 🚀🚀  To run single test file
-ptd ./path/to/file.spec.ts'
+ptd ./path/to/file.spec.ts
 
-# ❤️  Playwright watch script: source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692
-alias ptw='PWTEST_WATCH=1 npx playwright test --project=chromium'
-# ❤️  Playwright watch script with UI mode
-alias ptu='npx playwright test --project=chromium --ui'
-# MY UN-OFFICIAL WAY (NO NEED TO USE BELOW NODEMON `npm scripts` at all)
-# "watch": "nodemon -e spec.ts -x 'npx playwright test --project=chromium'",
-# "watch-headed": "nodemon -e spec.ts -x 'npx playwright test --headed --project=chromium' -w tests"
+##### Watch scripts #####
 
+# ❤️  Native way (source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692)
+alias ptwNative='PWTEST_WATCH=1 npx playwright test --project=chromium'
+# ❤️  With UI mode
+alias ptui='npx playwright test --project=chromium --ui'
+# ❤️  Nodemon (My custom way)
+alias ptw="nodemon -e spec.ts -x 'npx playwright test --project=chromium'",
+# ❤️ ❤️ ❤️  (Headed mode) Nodemon (My custom way)
+alias ptwh="nodemon -e spec.ts -x 'npx playwright test --headed --project=chromium' -w tests"
 ```
 
 Inside that directory, you can run several commands:

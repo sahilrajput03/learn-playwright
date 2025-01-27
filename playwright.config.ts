@@ -130,7 +130,8 @@ export default defineConfig({
   // Run your local dev server before starting the tests
   // webServer: {
   //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
+  //   url: 'http://127.0.0.1:3000', //*Note: You have to use either `url` or `port` key but not both. (ChatGPT)
+  ////   port: 3000, //*Note: You have to use either `url` or `port` key but not both. (ChatGPT)
+  //   reuseExistingServer: !process.env.CI, // If true, it will re-use an existing server on the port or url when available. If no server is running on that port or url, it will run the command to start a new server. If false, it will throw if an existing process is listening on the port or url. This should be commonly set to !process.env.CI to allow the local dev server when running tests locally.
   // },
 });
