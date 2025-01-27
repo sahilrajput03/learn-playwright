@@ -38,7 +38,7 @@ alias ptwNative='PWTEST_WATCH=1 npx playwright test --project=chromium'
 # ❤️  With UI mode
 alias ptui='npx playwright test --project=chromium --ui'
 # ❤️  Nodemon (My custom way)
-alias ptw="nodemon -e spec.ts -x 'npx playwright test --project=chromium'",
+alias ptw="nodemon -e spec.ts -x 'npx playwright test --project=chromium'"
 # ❤️ ❤️ ❤️  (Headed mode) Nodemon (My custom way)
 alias ptwh="nodemon -e spec.ts -x 'npx playwright test --headed --project=chromium' -w tests"
 ```
