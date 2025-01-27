@@ -127,7 +127,7 @@ export default defineConfig({
     // },
   ],
 
-  // Run your local dev server before starting the tests for e.g, setup in a frontend apps (svelte, react, etc)
+  // For usage in frontend apps (svelte, react, etc) to run your local dev server before starting the tests
   // webServer: {
   //   command: 'npm run start',
   //   url: 'http://127.0.0.1:3000', //*Note: You have to use either `url` or `port` key but not both. (ChatGPT)
