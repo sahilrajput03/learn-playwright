@@ -18,7 +18,7 @@ I have **disabled** `webkit` browser in `playwright.config.ts` file because my m
 
 Install browser via `npx playwright install`. In my case it installed following:
 
-- ` Chromium 119.0.6045.9` (If you just want this then you can run `npx playwright install webkit` command instead.
+- ` Chromium 119.0.6045.9` (If you just want this then you can run `npx playwright install chromium` command instead.
 - `Firefox 118.0.1 `
 - `Webkit 17.4`
 
