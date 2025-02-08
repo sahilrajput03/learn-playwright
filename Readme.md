@@ -14,17 +14,18 @@
 
 I have **disabled** `webkit` browser in `playwright.config.ts` file because my manjaro (arch based) linux does not yet able to run webkit brower. Though chromium and firefox runs quite well.
 
-## Installation via CLI
+## Installation [Tested on Macos and Linux]
 
-Install browser via `npx playwright install`. In my case it installed following:
+*Note: I used these steps to install recentely in `learn-multer` project on 8 Feb, 2025.*
 
-- ` Chromium 119.0.6045.9` (If you just want this then you can run `npx playwright install chromium` command instead.
-- `Firefox 118.0.1 `
-- `Webkit 17.4`
+1. `npm init playwright@latest` (and say no to install browsers when prompted)
+2. `npx playwright install chromium` (install chromium only)
 
-Install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
+To install all browsers you can run `npx playwright install`. In my case it installed --- `Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.
 
-My bash Aliases:
+**Linux:** You might need to install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
+
+## My bash Aliases
 
 ```bash
 # Playwright Aliases
