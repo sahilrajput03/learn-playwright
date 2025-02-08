@@ -21,9 +21,9 @@ I have **disabled** `webkit` browser in `playwright.config.ts` file because my m
 1. `npm init playwright@latest` (and say no to install browsers when prompted)
 2. `npx playwright install chromium` (install chromium only)
 
-To install all browsers you can run `npx playwright install`. In my case it installed --- `Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.
-
-**Linux:** You might need to install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
+**Note:**
+- To install all browsers you can run `npx playwright install`. In my case it installed --- `Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.
+- **Linux:** You might need to install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
 
 ## My bash Aliases
 
