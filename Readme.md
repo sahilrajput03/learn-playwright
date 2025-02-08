@@ -14,7 +14,7 @@
 
 I have **disabled** `webkit` browser in `playwright.config.ts` file because my manjaro (arch based) linux does not yet able to run webkit brower. Though chromium and firefox runs quite well.
 
-## Installation [Tested on Macos and Linux]
+## ❤️ Installation [Tested on Macos and Linux]
 
 *Note: I used these steps to install recentely in `learn-multer` project on 8 Feb, 2025.*
 
