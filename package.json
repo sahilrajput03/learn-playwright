@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "Install browser via `npx playwright install`",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "nps"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "@types/node": "^20.9.0",
+    "nps": "^5.10.0",
     "playwright-chromium": "^1.39.0"
   },
   "dependencies": {

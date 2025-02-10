@@ -1,14 +1,15 @@
 # Learn Playwright
 
 **Quick Links:**
+
 - **❤️Learn Playwright (Google Doc):** [Click here](https://docs.google.com/document/d/1wEsteSlYXM0nbCwucnXijWbqLDwEWjKIHgOdxhqSa3k/edit?usp=sharing)
 - Implemented in:
-    - `slas***`
-    - `qr-solution` Repo: [Click here](https://github.com/sahilrajput03/qr-solution-frontend)
-    - (will be done in learn-multer as well)
+  - `slas***`
+  - `qr-solution` Repo: [Click here](https://github.com/sahilrajput03/qr-solution-frontend)
+  - (will be done in learn-multer as well)
 - _Probably (todo: checkout):_
-    - We can install only single browser too like that: `npm i playwright-chromium` (source: [Click here](https://github.com/microsoft/playwright/issues/812#issuecomment-581501050))
-    - Course Playlist: [Click here](https://www.youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8)
+  - We can install only single browser too like that: `npm i playwright-chromium` (source: [Click here](https://github.com/microsoft/playwright/issues/812#issuecomment-581501050))
+  - Course Playlist: [Click here](https://www.youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8)
 
 **Note:**
 
@@ -16,36 +17,17 @@ I have **disabled** `webkit` browser in `playwright.config.ts` file because my m
 
 ## ❤️ Installation [Tested on Macos and Linux]
 
-*Note: I used these steps to install recentely in `learn-multer` project on 8 Feb, 2025.*
+_Note: I used these steps to install recentely in `learn-multer` project on 8 Feb, 2025._
 
 1. `npm init playwright@latest` (and say no to install browsers when prompted)
 2. `npx playwright install chromium` (install chromium only)
 
 **Note:**
+
 - To install all browsers you can run `npx playwright install`. In my case it installed --- `Chromium 119.0.6045.9`, `Firefox 118.0.1 ` and `Webkit 17.4`.
 - **Linux:** You might need to install Playwright operating system dependencies (requires sudo / root): `sudo npx playwright install-deps`
 
-## My bash Aliases
-
-```bash
-# Playwright Aliases
-alias pt='npx playwright test --project=chromium'
-alias pth='npx playwright test --headed --project=chromium'
-# ❤️ 🚀  LEARN: Open `Playwright Inspector` (helpful in debugging & step by step execution)
-alias ptd='npx playwright test --project=chromium --debug'
-# ❤️ 🚀🚀  To run single test file
-ptd ./path/to/file.spec.ts
-
-##### Watch scripts #####
-# ❤️  Native way (source: https://github.com/microsoft/playwright/issues/21960#issuecomment-1483604692)
-alias ptwNative='PWTEST_WATCH=1 npx playwright test --project=chromium'
-# ❤️  With UI mode
-alias ptui='npx playwright test --project=chromium --ui'
-# ❤️  Nodemon (My custom way)
-alias ptw="nodemon -e spec.ts -x 'npx playwright test --project=chromium'"
-# ❤️ ❤️ ❤️  (Headed mode) Nodemon (My custom way)
-alias ptwh="nodemon -e spec.ts -x 'npx playwright test --headed --project=chromium' -w tests"
-```
+## Learn playwright commands
 
 Inside that directory, you can run several commands:
 
