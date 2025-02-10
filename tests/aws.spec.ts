@@ -238,7 +238,7 @@ const deleteService = async ({ page }) => {
 
 // & You can:
 // & 1. create ECR repo with your aws bash script: `express-app-1/scripts/aws/repo-create.sh`
-test.describe.only('ecs', () => {
+test.describe.skip('ecs', () => {
     test.describe('create task definition and service', async () => {
         // This test is expected to be run alone using `test.only(..)`
         test('create a task definition in ecs in aws', async () => {

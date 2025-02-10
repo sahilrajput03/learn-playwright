@@ -16,7 +16,7 @@ test.use({
     },
 });
 
-test.only('Verify github login', async ({ page }) => {
+test.skip('Verify github login', async ({ page }) => {
     await page.goto(githubLoginUrl);
     await page.waitForURL('https://github.com/');
 
