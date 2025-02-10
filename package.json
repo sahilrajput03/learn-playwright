@@ -4,7 +4,8 @@
   "description": "Install browser via `npx playwright install`",
   "main": "index.js",
   "scripts": {
-    "start": "nps"
+    "start": "nps",
+    "test": "nps test"
   },
   "keywords": [],
   "author": "",
