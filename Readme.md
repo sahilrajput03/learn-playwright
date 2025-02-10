@@ -29,6 +29,8 @@ _Note: I used these steps to install recentely in `learn-multer` project on 8 Fe
 
 ## Learn playwright commands
 
+❤️ Check nps scripts in file `./package-scripts.js` file for your favorite commands.
+
 Inside that directory, you can run several commands:
 
 `npx playwright test`
