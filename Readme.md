@@ -6,7 +6,7 @@
 - Implemented in:
   - `slas***`
   - `qr-solution` Repo: [Click here](https://github.com/sahilrajput03/qr-solution-frontend)
-  - (will be done in learn-multer as well)
+  - learn-multer *(in learn-express repo)*
 - _Probably (todo: checkout):_
   - We can install only single browser too like that: `npm i playwright-chromium` (source: [Click here](https://github.com/microsoft/playwright/issues/812#issuecomment-581501050))
   - Course Playlist: [Click here](https://www.youtube.com/playlist?list=PLhW3qG5bs-L9sJKoT1LC5grGT77sfW0Z8)
